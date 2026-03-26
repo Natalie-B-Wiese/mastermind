@@ -3,6 +3,7 @@
 require_relative 'lib/color_options'
 require_relative 'lib/player'
 require_relative 'lib/color_sequence'
+require_relative 'lib/grader'
 
 # asks the human player for a 4-digit sequence and returns a valid ColorSequence object
 def ask_user_sequence
@@ -46,8 +47,6 @@ puts ColorOptions
 
 print "\n"
 
-BLACK_CIRCLE = ' ● '
-WHITE_CIRCLE = ' ◯ '
 won = false
 (1..NUM_GUESSES).each do |guess|
   puts "Guess #{guess}/#{NUM_GUESSES}"
@@ -58,15 +57,13 @@ won = false
   # Show the sequence that user has guessed
   puts sequence_guess
 
-  # Ask the CPU to grade the sequence that user has guessed
-  correctness = tray_player.color_sequence.compare_to_guess(sequence_guess)
+  # grade the sequence
+  grade = Grader.new(tray_player.color_sequence, sequence_guess)
 
   # show the hash results as colored pegs against a white background
-  pegs = BLACK_CIRCLE * correctness[:black] + WHITE_CIRCLE * correctness[:white]
-  print ColorOptions::WHITE + pegs + ColorOptions.reset_color
-  print "\n"
+  puts grade
 
-  next unless correctness[:black] == ColorSequence::LENGTH
+  next unless grade.won?
 
   puts "You won after #{guess} guesses!"
   won = true
