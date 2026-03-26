@@ -26,6 +26,10 @@ module ColorOptions
     COLORS.length - 1
   end
 
+  def self.valid_color_id?(color_id)
+    color_id > 0 && color_id <= num_colors
+  end
+
   def self.to_s
     string = ''
     # skipping the RESET color, return all color options with their indices
