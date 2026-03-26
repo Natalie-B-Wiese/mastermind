@@ -8,6 +8,7 @@ class ColorSequence
   # the number of colors in a sequence
   LENGTH = 4
 
+  # an array of Color objects
   attr_reader :colors
 
   # creates a new sequence from an array of color_id
@@ -29,7 +30,64 @@ class ColorSequence
     string
   end
 
+  # compares this sequence (aka goal sequence) to the guess.
+  # Returns a hash of ':black' (fully correct), ':white' (correct color wrong spot), and ':incorrect'
+  def compare_to_guess(guess)
+    result = {
+      black: 0,
+      white: 0,
+      incorrect: 0
+    }
+
+    # contains indices of guess that perfectly match goal. Prevents double counting
+    correct_indices = fully_correct_indices(@colors, guess.colors)
+    num_correct = correct_indices.length
+    result[:black] = num_correct
+
+    num_semi = num_semicorrect(@colors, guess.colors, correct_indices)
+    result[:white] = num_semi
+
+    num_incorrect = LENGTH - (num_correct + num_semi)
+    result[:incorrect] = num_incorrect
+
+    result
+  end
+
   private
+
+  # Returns an array of indices where goal and guess are identical
+  def fully_correct_indices(goal_colors, guess_colors)
+    correct_indices = []
+
+    goal_colors.each_with_index do |goal_color, index|
+      correct_indices.push(index) if guess_colors[index].equals(goal_color)
+    end
+
+    correct_indices
+  end
+
+  # get the number of matches where color is right but in the wrong spot, exlude indices that appear in ignore_indices
+  def num_semicorrect(goal_colors, guess_colors, ignore_indices)
+    # contains indices of guess that are included on goal. Prevents double counting
+    guess_white_indices = []
+
+    # check for semi-correct matches excluding matches already found
+    goal_colors.each.with_index do |goal_color, goal_index|
+      next if ignore_indices.include?(goal_index)
+
+      guess_colors.each.with_index do |guess_color, guess_index|
+        # skip over this color if it has already been counted
+        next if guess_white_indices.include?(guess_index)
+
+        if guess_color.equals(goal_color)
+          guess_white_indices.push(guess_index)
+          # break out of this loop and continue on the colors.each loop
+          break
+        end
+      end
+    end
+    guess_white_indices.length
+  end
 
   # Randomize all the colors in this sequence
   def randomize

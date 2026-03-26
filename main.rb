@@ -51,3 +51,4 @@ sequence_guess = ask_user_sequence
 puts sequence_guess
 
 # Ask the CPU to grade the sequence that user has guessed
+p tray_player.color_sequence.compare_to_guess(sequence_guess)
