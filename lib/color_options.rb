@@ -14,4 +14,13 @@ module ColorOptions
   def self.get_color_by_color_id(id)
     COLORS[id]
   end
+
+  def self.reset_color
+    RESET
+  end
+
+  # returns the number of choosable colors
+  def self.num_colors
+    COLORS.length - 1
+  end
 end
