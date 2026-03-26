@@ -25,4 +25,18 @@ module ColorOptions
   def self.num_colors
     COLORS.length - 1
   end
+
+  def self.to_s
+    string = ''
+    # skipping the RESET color, return all color options with their indices
+    COLORS.each.with_index do |color_code, index|
+      next if color_code == RESET
+
+      string += "#{color_code} #{index} "
+    end
+
+    string += reset_color
+
+    string
+  end
 end

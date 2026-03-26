@@ -21,6 +21,14 @@ class ColorSequence
     end
   end
 
+  def to_s
+    string = ''
+    @colors.each do |color|
+      string += color.to_s
+    end
+    string
+  end
+
   private
 
   # Randomize all the colors in this sequence
