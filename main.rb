@@ -51,4 +51,14 @@ sequence_guess = ask_user_sequence
 puts sequence_guess
 
 # Ask the CPU to grade the sequence that user has guessed
-p tray_player.color_sequence.compare_to_guess(sequence_guess)
+correctness = tray_player.color_sequence.compare_to_guess(sequence_guess)
+
+p correctness
+
+BLACK_CIRCLE = ' ● '
+WHITE_CIRCLE = ' ◯ '
+
+# show the hash results as colored pegs against a white background
+pegs = BLACK_CIRCLE * correctness[:black] + WHITE_CIRCLE * correctness[:white]
+print ColorOptions::WHITE + pegs + ColorOptions.reset_color
+print "\n"
