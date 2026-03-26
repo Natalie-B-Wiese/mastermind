@@ -33,6 +33,8 @@ end
 tray_player = CpuPlayer.new
 guessing_player = HumanPlayer.new
 
+NUM_GUESSES = 12
+
 # for debugging. Show the random sequence that the CPU has chosen
 puts 'CPU has randomly chosen this sequence:'
 puts tray_player.color_sequence
@@ -44,21 +46,31 @@ puts ColorOptions
 
 print "\n"
 
-# get a valid sequence from the user
-sequence_guess = ask_user_sequence
-
-# Show the sequence that user has guessed
-puts sequence_guess
-
-# Ask the CPU to grade the sequence that user has guessed
-correctness = tray_player.color_sequence.compare_to_guess(sequence_guess)
-
-p correctness
-
 BLACK_CIRCLE = ' ● '
 WHITE_CIRCLE = ' ◯ '
+won = false
+(1..NUM_GUESSES).each do |guess|
+  puts "Guess #{guess}/#{NUM_GUESSES}"
 
-# show the hash results as colored pegs against a white background
-pegs = BLACK_CIRCLE * correctness[:black] + WHITE_CIRCLE * correctness[:white]
-print ColorOptions::WHITE + pegs + ColorOptions.reset_color
-print "\n"
+  # get a valid sequence from the user
+  sequence_guess = ask_user_sequence
+
+  # Show the sequence that user has guessed
+  puts sequence_guess
+
+  # Ask the CPU to grade the sequence that user has guessed
+  correctness = tray_player.color_sequence.compare_to_guess(sequence_guess)
+
+  # show the hash results as colored pegs against a white background
+  pegs = BLACK_CIRCLE * correctness[:black] + WHITE_CIRCLE * correctness[:white]
+  print ColorOptions::WHITE + pegs + ColorOptions.reset_color
+  print "\n"
+
+  next unless correctness[:black] == ColorSequence::LENGTH
+
+  puts "You won after #{guess} guesses!"
+  won = true
+  break
+end
+
+puts "You lost. The sequence was: #{tray_player.color_sequence}" unless won
