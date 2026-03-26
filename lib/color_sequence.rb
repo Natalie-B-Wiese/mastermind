@@ -77,7 +77,7 @@ class ColorSequence
 
       guess_colors.each.with_index do |guess_color, guess_index|
         # skip over this color if it has already been counted
-        next if guess_white_indices.include?(guess_index)
+        next if ignore_indices.include?(guess_index) || guess_white_indices.include?(guess_index)
 
         if guess_color.equals(goal_color)
           guess_white_indices.push(guess_index)
