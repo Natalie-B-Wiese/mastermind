@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Holds a single color
 class Color
   require_relative 'color_options'

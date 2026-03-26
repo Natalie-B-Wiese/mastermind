@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # a base class for a player.
 class Player
 end

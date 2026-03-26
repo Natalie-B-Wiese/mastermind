@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # a color sequence is made up of 4 colors
 class ColorSequence
   require_relative 'color'

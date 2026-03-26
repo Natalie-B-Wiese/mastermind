@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'lib/color_options'
 require_relative 'lib/player'
 
