@@ -5,13 +5,15 @@ require_relative 'player'
 # a CPU player chooses 4 random colors when initialized
 # When it is the CPU's turn, they judge the colors that human has put in
 class CpuPlayer < Player
-  attr_reader :color_sequence
-
   # computer is a player that randomly selects 4 colors
   def initialize(name)
     super(name)
-    # generate a random color sequence
-    @color_sequence = ColorSequence.new
+  end
+
+  # generate a random color sequence and return a ColorSequence object (method for codemaker)
+  def create_sequence
+    puts "#{@name} has chosen a sequence"
+    ColorSequence.new
   end
 
   def guess(*args)

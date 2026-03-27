@@ -11,9 +11,11 @@ class Game
 
   # codemaker and codebreaker are each Player objects. One is a CPU and the other is a Human
   # Create a Game object and play that game
-  def initialize(codemaker, codebreaker)
+  def initialize(codemaker, codebreaker, goal_sequence)
     @codemaker = codemaker
     @codebreaker = codebreaker
+
+    @goal_sequence = goal_sequence
 
     # show available color options
     puts 'Color Options:'
@@ -47,9 +49,9 @@ class Game
   # prints a win or lose message depending on value of won
   def print_end_game_message(won)
     if won
-      puts 'You won!'
+      puts "#{@codebreaker.name} won!"
     else
-      puts "You lost. The sequence was: #{@codemaker.color_sequence}"
+      puts "#{@codebreaker.name} lost. The sequence was: #{@goal_sequence}"
     end
   end
 
@@ -67,7 +69,7 @@ class Game
   # Grades the passed in sequence, prints the grade, and returns the grade
   def grade_sequence(guess)
     # grade the sequence
-    grade = Grader.new(@codemaker.color_sequence, guess)
+    grade = Grader.new(@goal_sequence, guess)
 
     # show the hash results as colored pegs against a white background
     puts " #{grade}"

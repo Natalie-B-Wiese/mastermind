@@ -8,6 +8,12 @@ class HumanPlayer < Player
     super(name)
   end
 
+  # make a 4-sequence code and return a ColorSequence object (for codemaker)
+  def create_sequence
+    prompt = "Enter #{ColorSequence::LENGTH}-digit code: "
+    valid_color_sequence_from_input(prompt)
+  end
+
   # prompt human to make a valid guess and return the valid sequence human entered
   def guess
     prompt = "Enter #{ColorSequence::LENGTH}-digit guess: "
