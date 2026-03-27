@@ -11,7 +11,7 @@ def ask_user_sequence
   color_id_array = []
 
   until valid
-    puts 'Enter 4-digit guess: '
+    print 'Enter 4-digit guess: '
     answer = gets.chomp
 
     if answer.length != 4
@@ -55,13 +55,13 @@ won = false
   sequence_guess = ask_user_sequence
 
   # Show the sequence that user has guessed
-  puts sequence_guess
+  print sequence_guess
 
   # grade the sequence
   grade = Grader.new(tray_player.color_sequence, sequence_guess)
 
   # show the hash results as colored pegs against a white background
-  puts grade
+  puts " #{grade}"
 
   next unless grade.won?
 
