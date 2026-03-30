@@ -17,6 +17,8 @@ class Game
 
     @goal_sequence = goal_sequence
 
+    @codebreaker.setup_guesses if cpu_codebreaker?
+
     # show available color options
     puts 'Color Options:'
     puts ColorOptions
@@ -40,10 +42,16 @@ class Game
       won = grade.won?
 
       break if won
+
+      @codebreaker.respond_to_grade(grade.result) if cpu_codebreaker?
     end
 
     print_end_game_message(won)
     won
+  end
+
+  def cpu_codebreaker?
+    @codebreaker.instance_of?(CpuPlayer)
   end
 
   # prints a win or lose message depending on value of won

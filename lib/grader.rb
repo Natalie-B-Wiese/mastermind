@@ -5,6 +5,8 @@ class Grader
   BLACK_CIRCLE = ' ● '
   WHITE_CIRCLE = ' ◯ '
 
+  attr_reader :result
+
   # Create a Grader that compares how close guess_sequence is to goal_sequence
   def initialize(goal_sequence, guess_sequence)
     # contains indices of guess that perfectly match goal. Prevents double counting

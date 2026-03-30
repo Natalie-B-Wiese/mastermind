@@ -16,7 +16,7 @@ class Player
   end
 
   # make a 4-sequence guess and return a ColorSequence object (method for codebreaker)
-  def guess(*args)
+  def guess
     raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
   end
 end

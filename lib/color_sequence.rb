@@ -30,6 +30,15 @@ class ColorSequence
     string
   end
 
+  def to_i_array
+    int_array = []
+    @colors.each do |color|
+      int_array.push(color.color_id)
+    end
+
+    int_array
+  end
+
   # Randomize all the colors in this sequence
   def randomize
     @colors.map! { choose_random_color }
