@@ -39,6 +39,24 @@ class CpuPlayer < Player
 
     # remove invalid possibilities from possibilities
     @possibilities -= invalid_possibilities
+
+    puts "Num possibilities before #{@possibilities.length}"
+
+    # if grade[:white]=4
+    # then grade[:black]=0
+    # keep in possibilities if guess_possibility_order_similarness is 0 (aka all in wrong order)
+
+    # if grade[:white]=1
+    # and grade[:black]=2
+    # keep in possibilities if guess_possibility_order_similarness is 2
+
+    # if guess_possibility_order_similarness = grade[:black] then it is valid
+    invalid_possibilities = @possibilities.reject do |possibility|
+      guess_possibility_order_similarness(guess_digits, possibility) == grade[:black]
+    end
+
+    # remove invalid possibilities from possibilities
+    @possibilities -= invalid_possibilities
   end
 
   # this is only used when CPU is a codebreaker and is called only at the begining of a game
@@ -51,10 +69,7 @@ class CpuPlayer < Player
 
   # gets the number of digits that are shared between the guess and a possibility
   def guess_possibility_similarness(guess_digits_i, possibility)
-    # the number of digits that are shared between this possibility and the guess
     similarness = 0
-
-    # reset guess_digits after every possibility
     guess_digits_s = guess_digits_i.map(&:to_s)
 
     # if there is a matching digit increase similarness
@@ -65,6 +80,19 @@ class CpuPlayer < Player
 
       # prevent duplicate counts
       guess_digits_s.delete_at(guess_digits_s.index(possibility_digit_s))
+    end
+
+    similarness
+  end
+
+  # gets how similar the order is between guess and possibility (like the black check)
+  def guess_possibility_order_similarness(guess_digits_i, possibility)
+    similarness = 0
+    guess_digits_s = guess_digits_i.map(&:to_s)
+
+    # if the digits at that index are identical, increase similarness
+    possibility.to_s.chars.each.with_index do |possibility_digit_s, index|
+      similarness += 1 if guess_digits_s[index] == possibility_digit_s
     end
 
     similarness
