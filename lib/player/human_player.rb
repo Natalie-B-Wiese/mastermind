@@ -4,10 +4,6 @@ require_relative 'player'
 
 # a player that is human
 class HumanPlayer < Player
-  def initialize(name)
-    super(name)
-  end
-
   # make a 4-sequence code and return a ColorSequence object (for codemaker)
   def create_sequence
     prompt = "Enter #{ColorSequence::LENGTH}-digit code: "

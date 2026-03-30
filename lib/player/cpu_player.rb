@@ -32,27 +32,12 @@ class CpuPlayer < Player
     # the number of correct digits
     num_keepers = grade[:black] + grade[:white]
 
-    # if the number of digits they share equals num_keepers then it is valid
+    # if the number of digits they share equals num_keepers AND
+    # The order is correct for amount grade[:black] pegs
+    # Then it is valid
     invalid_possibilities = @possibilities.reject do |possibility|
-      guess_possibility_similarness(guess_digits, possibility) == num_keepers
-    end
-
-    # remove invalid possibilities from possibilities
-    @possibilities -= invalid_possibilities
-
-    puts "Num possibilities before #{@possibilities.length}"
-
-    # if grade[:white]=4
-    # then grade[:black]=0
-    # keep in possibilities if guess_possibility_order_similarness is 0 (aka all in wrong order)
-
-    # if grade[:white]=1
-    # and grade[:black]=2
-    # keep in possibilities if guess_possibility_order_similarness is 2
-
-    # if guess_possibility_order_similarness = grade[:black] then it is valid
-    invalid_possibilities = @possibilities.reject do |possibility|
-      guess_possibility_order_similarness(guess_digits, possibility) == grade[:black]
+      guess_possibility_similarness(guess_digits, possibility) == num_keepers &&
+        guess_possibility_order_similarness(guess_digits, possibility) == grade[:black]
     end
 
     # remove invalid possibilities from possibilities
